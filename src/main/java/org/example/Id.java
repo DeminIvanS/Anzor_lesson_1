@@ -1,11 +1,15 @@
 package org.example;
 
 public class Id {
-    private static Integer id=0;
+    private Integer id=0;
+    StorageServiceImpl service = new StorageServiceImpl();
 
-    public static Integer getGenerateId(){
-        return id++;
+    public Integer getGenerateId(){
+        id = service.storage.getLastId();
+        id++;
+        return id;
     }
+
 
 
 

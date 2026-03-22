@@ -3,57 +3,47 @@ package org.example;
 public class Parser {
     Record record;
 
-    private int introducedId;
+    Validator validator = new Validator();
 
-    // команда, команда + id, команда + строка, команда + id + строка
-    public void parse(String string) {
 
-        String[] commandAndTail = splitStringOnToo(string);
-        if(commandAndTail.length>1) {
-        String[] idOrStringAndString = splitStringOnToo(commandAndTail[1]);
-            if(isInt(idOrStringAndString[0])){
-                introducedId = stringToInt(idOrStringAndString[0]);
-                if(idOrStringAndString.length>1){
-                    record = new Record(idOrStringAndString[1]);
-                }
-            }else if(!idOrStringAndString[0].isBlank()){
-                record = new Record(idOrStringAndString[0]);
-            }
-        }
-        String firstWord = commandAndTail[0];
-        System.out.println(command(firstWord.toUpperCase(),commandAndTail.length));
-
+    public Command parse(String string) {
+        Command command = command(string);
+        System.out.println(command);
+        return command;
     }
 
 
-    public String[] splitStringOnToo(String string){
-        String[] strings = string.split(" ", 2);
+    public String[] getSplit(String string){
+        String[] strings = string.split(" ");
+        return strings;
+    }
+    public String[] getSplitOnTwo(String string){
+        String[] strings = string.split(" ",2);
         return strings;
     }
 
-    private Command command(String command, int lengthArray) {
-        if(lengthArray < 2 && "GET".equals(command)){
-            return parseGetAll();
-        }else{
-        return switch (command.toUpperCase()) {
-            case "GET" -> parseGet(introducedId);
-            case "UPDATE" -> parseUpdate(introducedId, record);
-            case "DELETE" -> parseDelete(introducedId);
-            case "CREATE" -> parseCreate(Id.getGenerateId(), record);
-            default -> throw new RuntimeException("Wrong string");
-            };
+    private Command command(String string) {
+        String[] words = getSplit(string);
+        if(words.length==1 && "GET".equals(words[0])){
+            return parseGetAll(string);
         }
+        String command = getSplitOnTwo(string)[0];
+        return switch (command.toUpperCase()) {
+            case "GET" -> parseGet(string);
+            case "UPDATE" -> parseUpdate(string);
+            case "DELETE" -> parseDelete(string);
+            case "CREATE" -> parseCreate(string);
+            default -> throw new RuntimeException("Wrong string");
+        };
+
     }
-
-
-
 
     private boolean isInt(String string){
         try {
             stringToInt(string);
                 return true;
-        } finally {
-            return false;
+            } catch (Exception e){
+                return false;
         }
     }
     private Integer stringToInt(String string){
@@ -61,24 +51,44 @@ public class Parser {
 
     }
 
-    private Command parseGet(Integer id) {
-        return new Command(id, CommandType.GET);
+    private Command parseGet(String input) {
+        validator.validate(input);
+        getSplit(input);
+        return new Command(1, CommandType.GET);
     }
 
-    private Command parseGetAll() {
+    private Command parseGetAll(String string) {
         return new Command(CommandType.GET_ALL);
     }
 
 
-    private Command parseCreate(Integer id, Record record) {
-        return new Command(id, record, CommandType.CREATE);
+    private Command parseCreate(String input) {
+        validator.validate(input);
+        String text = getSplitOnTwo(input)[1];
+        return new Command(2, new Record(text), CommandType.CREATE);
     }
 
-    private Command parseUpdate(Integer id, Record record) {
-        return new Command(id, record, CommandType.UPDATE);
+    private Command parseUpdate(String input) {
+        validator.validate(input);
+        String[] commandAndString = getSplitOnTwo(input);
+        String[] idAndString = getSplitOnTwo(commandAndString[1]);
+        Integer id = null;
+        if(isInt(idAndString[0])){
+            id = stringToInt(idAndString[0]);
+        }
+        String text = idAndString[1];
+        return new Command(id, new Record(text), CommandType.UPDATE);
     }
 
-    private Command parseDelete(Integer id) {
+    private Command parseDelete(String input) {
+        validator.validate(input);
+        String[] commandAndString = getSplitOnTwo(input);
+        Integer id = null;
+        if(isInt(commandAndString[1])){
+            id = stringToInt(getSplitOnTwo(input)[1]);
+        }
+
+
         return new Command(id, CommandType.DELETE);
     }
 

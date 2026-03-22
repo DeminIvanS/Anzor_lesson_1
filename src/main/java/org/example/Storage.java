@@ -4,5 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Storage {
-    Map<Integer, Record> storage = new HashMap<>();
+    private Map<Integer, Record> storage = new HashMap<>();
+    public int getLastId(){
+        int lastId = storage.entrySet().size();
+        return lastId;
+    }
 }
