@@ -3,9 +3,26 @@ package org.example;
 import java.util.Objects;
 
 public class Command {
-    Integer id;
-    Record record;
-    CommandType type;
+    private final Integer id;
+    private final Record record;
+    private final CommandType type;
+
+    public Command(Integer id, Record record, CommandType type) {
+        this.id = id;
+        this.record = record;
+        this.type = type;
+    }
+
+    public Command(CommandType type) {
+        this.type = type;
+        this.record = null;
+        this.id = null;
+    }
+    public Command(Integer id,CommandType type) {
+        this.id = id;
+        this.type = type;
+        this.record = null;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -32,21 +49,4 @@ public class Command {
                 '}';
     }
 
-
-    public Command(Integer id, Record record, CommandType type) {
-        this.id = id;
-        this.record = record;
-        this.type = type;
-    }
-    public Command(Record record, CommandType type) {
-        this.record = record;
-        this.type = type;
-    }
-    public Command(CommandType type) {
-        this.type = type;
-    }
-    public Command(Integer id,CommandType type) {
-        this.id = id;
-        this.type = type;
-    }
 }
