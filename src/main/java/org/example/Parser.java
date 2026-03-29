@@ -1,10 +1,9 @@
 package org.example;
 
 public class Parser {
-    Record record;
+
 
     Validator validator = new Validator();
-
 
     public Command parse(String string) {
         Command command = command(string);

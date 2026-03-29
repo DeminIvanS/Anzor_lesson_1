@@ -1,7 +1,7 @@
 package org.example;
 
 public class StorageServiceImpl implements StorageService {
-    Storage storage = new Storage();
+
 
 
     @Override
