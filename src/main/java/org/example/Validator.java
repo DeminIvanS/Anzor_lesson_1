@@ -5,7 +5,7 @@ public class Validator {
         String[] words = getSplit(input);
         if (words.length == 1) {
             validateGetAll(input);
-        }else {
+        } else {
 
             String[] args = input.split(" ");
             switch (args[0].toUpperCase()) {
@@ -18,13 +18,7 @@ public class Validator {
         }
     }
 
-    public String getFirstWord(String string) {
-        String[] strings = string.split(" ", 2);
-        return strings[0];
-    }
-
     private void validateGetAll(String input) {
-
         if (!"GET".equals(getSplit(input)[0].toUpperCase())) {
             throw new IllegalArgumentException("Wrong command");
         }
@@ -72,7 +66,6 @@ public class Validator {
     }
 
     private void validateUpdate(String input) {
-
         if (getSplit(input).length < 3) {
             throw new IllegalArgumentException("Wrong string");
         }

@@ -3,7 +3,7 @@ package org.example;
 import java.util.Objects;
 
 public class Record {
-    private String value;
+    private final String value;
 
     public Record(String value) {
         this.value = value;

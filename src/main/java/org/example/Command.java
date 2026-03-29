@@ -7,23 +7,18 @@ public class Command {
     private final Record record;
     private final CommandType type;
 
-    public Command(Integer id, Record record, CommandType type) {
-        this.id = id;
-        this.record = record;
-        this.type = type;
+    public Integer getId() {
+        return id;
     }
 
-    public Command(CommandType type) {
-        this.type = type;
-        this.record = null;
-        this.id = null;
+    public Record getRecord() {
+        return record;
     }
 
-    public Command(Integer id, CommandType type) {
-        this.id = id;
-        this.type = type;
-        this.record = null;
+    public CommandType getType() {
+        return type;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -50,4 +45,24 @@ public class Command {
                 '}';
     }
 
+    public Command(Integer id, Record record, CommandType type) {
+        this.id = id;
+        this.record = record;
+        this.type = type;
+    }
+    public Command(Record record, CommandType type) {
+        this.id = null;
+        this.record = record;
+        this.type = type;
+    }
+    public Command(CommandType type) {
+        this.id = null;
+        this.record = null;
+        this.type = type;
+    }
+    public Command(Integer id,CommandType type) {
+        this.id = id;
+        this.record = null;
+        this.type = type;
+    }
 }
