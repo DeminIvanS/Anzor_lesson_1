@@ -8,7 +8,5 @@ public interface StorageService {
 
     Record deleteById(Integer id);
 
-
-
-
+    Record update(Integer id, Record record);
 }

@@ -5,28 +5,9 @@ public class Parser {
 
     Validator validator = new Validator();
 
-    public Command parse(String string) {
-        Command command = command(string);
-        System.out.println(command);
-        return command;
-    }
+    public Command command(String string) {
 
-
-    public String[] getSplit(String string){
-        String[] strings = string.split(" ");
-        return strings;
-    }
-    public String[] getSplitOnTwo(String string){
-        String[] strings = string.split(" ",2);
-        return strings;
-    }
-
-    private Command command(String string) {
-        String[] words = getSplit(string);
-        if(words.length==1 && "GET".equals(words[0])){
-            return parseGetAll(string);
-        }
-        String command = getSplitOnTwo(string)[0];
+        String command = string.split(" ", 2)[0];
         return switch (command.toUpperCase()) {
             case "GET" -> parseGet(string);
             case "UPDATE" -> parseUpdate(string);
@@ -37,42 +18,49 @@ public class Parser {
 
     }
 
-    private boolean isInt(String string){
+    private boolean isInt(String string) {
         try {
             stringToInt(string);
-                return true;
-            } catch (Exception e){
-                return false;
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
-    private Integer stringToInt(String string){
+
+    private Integer stringToInt(String string) {
         return Integer.parseInt(string);
 
     }
 
     private Command parseGet(String input) {
-        validator.validate(input);
-        getSplit(input);
-        return new Command(1, CommandType.GET);
+        String[] words = input.split(" ");
+        if (words.length == 1 && "GET".equals(words[0])) {
+            return parseGetAll();
+        } else {
+            validator.validate(input);
+            String[] commandAndId = input.split(" ");
+            Integer id = Integer.parseInt(commandAndId[1]);
+            return new Command(id, CommandType.GET);
+        }
     }
 
-    private Command parseGetAll(String string) {
+    private Command parseGetAll() {
         return new Command(CommandType.GET_ALL);
     }
 
 
     private Command parseCreate(String input) {
         validator.validate(input);
-        String text = getSplitOnTwo(input)[1];
+        String text = input.split(" ", 2)[1];
         return new Command(2, new Record(text), CommandType.CREATE);
     }
 
     private Command parseUpdate(String input) {
         validator.validate(input);
-        String[] commandAndString = getSplitOnTwo(input);
-        String[] idAndString = getSplitOnTwo(commandAndString[1]);
+        String[] commandAndString = input.split(" ", 2);
+        String[] idAndString = commandAndString[1].split(" ", 2);
         Integer id = null;
-        if(isInt(idAndString[0])){
+        if (isInt(idAndString[0])) {
             id = stringToInt(idAndString[0]);
         }
         String text = idAndString[1];
@@ -81,13 +69,11 @@ public class Parser {
 
     private Command parseDelete(String input) {
         validator.validate(input);
-        String[] commandAndString = getSplitOnTwo(input);
+        String[] commandAndString = input.split(" ", 2);
         Integer id = null;
-        if(isInt(commandAndString[1])){
-            id = stringToInt(getSplitOnTwo(input)[1]);
+        if (isInt(commandAndString[1])) {
+            id = stringToInt((input.split(" ", 2))[1]);
         }
-
-
         return new Command(id, CommandType.DELETE);
     }
 

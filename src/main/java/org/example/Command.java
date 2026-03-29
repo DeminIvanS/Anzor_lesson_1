@@ -18,7 +18,8 @@ public class Command {
         this.record = null;
         this.id = null;
     }
-    public Command(Integer id,CommandType type) {
+
+    public Command(Integer id, CommandType type) {
         this.id = id;
         this.type = type;
         this.record = null;

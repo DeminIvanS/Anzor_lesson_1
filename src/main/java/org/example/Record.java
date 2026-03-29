@@ -9,7 +9,7 @@ public class Record {
         this.value = value;
     }
 
-    public String getValue(){
+    public String getValue() {
         return value;
     }
 

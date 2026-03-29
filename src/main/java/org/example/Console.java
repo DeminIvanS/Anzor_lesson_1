@@ -10,7 +10,7 @@ public class Console {
         String str = "";
         while (!"exit".equals(str)) {
             str = scanner.nextLine();
-            parser.parse(str);
+            parser.command(str);
 
         }
 

@@ -12,7 +12,7 @@ public class ParserTest {
         String input = "Get 1";
         Command expected = new Command(1,CommandType.GET);
         // when
-        Command command = parser.parse(input);
+        Command command = parser.command(input);
         // then
         assertEquals(expected,command);
 
@@ -23,7 +23,7 @@ public class ParserTest {
 
 
         Command expected = new Command(null, null, CommandType.GET_ALL);
-        Command command = parser.parse(input);
+        Command command = parser.command(input);
 
 
         assertEquals(expected, command);
@@ -33,18 +33,17 @@ public class ParserTest {
         String input = "delete 2";
 
         Command expected = new Command(2, null, CommandType.DELETE);
-        Command command = parser.parse(input);
+        Command command = parser.command(input);
 
         assertEquals(expected, command);
     }
     @Test
     public void parseUpdateTest(){
         String input = "update 1 dsgf";
-        String[] commandAndString = parser.getSplitOnTwo(input);
-        String[] idAndString = parser.getSplitOnTwo(commandAndString[1]);
-
+        String[] commandAndString = input.split(" ", 2);
+        String[] idAndString = commandAndString[1].split(" ", 2);
         Command expected = new Command(1, new Record(idAndString[1]), CommandType.UPDATE);
-        Command command = parser.parse(input);
+        Command command = parser.command(input);
 
         assertEquals(expected, command);
     }
@@ -52,11 +51,11 @@ public class ParserTest {
     @Test
     public void parseCreateTest(){
         String input = "create dsgf";
-        String[] commandAndString = parser.getSplitOnTwo(input);
+        String[] commandAndString = input.split(" ", 2);
 
 
         Command expected = new Command(2, new Record(commandAndString[1]), CommandType.CREATE);
-        Command command = parser.parse(input);
+        Command command = parser.command(input);
 
         assertEquals(expected, command);
     }

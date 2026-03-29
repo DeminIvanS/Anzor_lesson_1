@@ -20,5 +20,8 @@ public class StorageServiceImpl implements StorageService {
         return null;
     }
 
-
+    @Override
+    public Record update(Integer id, Record record){
+        return null;
+    }
 }
