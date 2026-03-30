@@ -40,9 +40,8 @@ public class ParserTest {
     @Test
     public void parseUpdateTest(){
         String input = "update 1 dsgf";
-        String[] commandAndString = parser.getSplitOnTwo(input);
-        String[] idAndString = parser.getSplitOnTwo(commandAndString[1]);
-
+        String[] commandAndString = input.split(" ", 2);
+        String[] idAndString = commandAndString[1].split(" ", 2);
         Command expected = new Command(1, new Record(idAndString[1]), CommandType.UPDATE);
         Command command = parser.parse(input);
 
@@ -52,7 +51,7 @@ public class ParserTest {
     @Test
     public void parseCreateTest(){
         String input = "create dsgf";
-        String[] commandAndString = parser.getSplitOnTwo(input);
+        String[] commandAndString = input.split(" ", 2);
 
 
         Command expected = new Command(2, new Record(commandAndString[1]), CommandType.CREATE);
