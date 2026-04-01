@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Map;
+
 public interface StorageService {
 
     Integer save(Record record);
@@ -10,7 +12,7 @@ public interface StorageService {
 
     Integer updateById(Integer id, Record rec);
 
-    Record getAllRecords();
+    Map<Integer, Record> getAllRecords();
 
 
 }

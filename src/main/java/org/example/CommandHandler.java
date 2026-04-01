@@ -1,5 +1,8 @@
 package org.example;
 
+import java.util.Map;
+import java.util.stream.Stream;
+
 public class CommandHandler {
     private final StorageService service;
 
@@ -27,9 +30,10 @@ public class CommandHandler {
                 yield new Result(String.format("String with id = %s deleted", command.getId()));
             }
             case GET_ALL -> {
-                Record record = service.getAllRecords();
+                Map<Integer,Record> copyStorage = service.getAllRecords();
+
                 //TODO: реализовать метод в сервисе возвращающую все записи.
-                yield new Result(record.getValue());
+                yield new Result(copyStorage.values().stream().map(value->value.getValue()).toString());
             }
         };
 

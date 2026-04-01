@@ -2,6 +2,10 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ServiceImplTest {
@@ -106,10 +110,12 @@ public class ServiceImplTest {
     }
     @Test
     public void getAllTest() {
+
         Record record = new Record("I'm learning Java");
         Record record2 = new Record("I'm learning Java too");
         Record record3 = new Record("I'm learning JavaScript");
         Record record4 = new Record("I'm tomato");
+        List<Record> expectedRecord = List.of(record,record2,record3,record4);
         StorageServiceImpl storageService = new StorageServiceImpl();
 
         storageService.save(record);
@@ -117,10 +123,16 @@ public class ServiceImplTest {
         storageService.save(record3);
         storageService.save(record4);
 
-        Record rec = storageService.getAllRecords();
-        System.out.println(rec.getValue());
-        assertEquals(record.getValue(),rec.getValue());
+        Map<Integer, Record> copyStorage = storageService.getAllRecords();
+        int index = 0;
+        for (Map.Entry<Integer, Record> entry : copyStorage.entrySet()) {
+            Record expected = expectedRecord.get(index);
+            Record actual = entry.getValue();
+
+            assertEquals(expected, actual, "Ошибка в записи с ключом: " + entry.getKey());
+            index++;
 
 
+        }
     }
 }
