@@ -1,24 +1,18 @@
 package org.example;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
+
 import java.util.Map;
 
 public class StorageServiceImpl implements StorageService {
-    private Map<Integer, Record> storage = new LinkedHashMap<>();
-    private Integer id = null;
+    private Map<Integer, Record> storage = new HashMap<>();
+    private Integer lastId = -1;
 
     @Override
     public Integer save(Record record) {
-        if (storage.isEmpty()) {
-            id = 0;
-            storage.put(id, record);
-        } else {
-            id = storage.keySet().stream()
-                    .reduce((first, second) -> second)
-                    .orElse(null);
-            storage.put(++id, record);
-        }
-        return id;
+        lastId++;
+        storage.put(lastId, record);
+        return lastId;
     }
 
     @Override
@@ -44,12 +38,9 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public Record getAllRecords() {
-        for (Map.Entry<Integer, Record> entry : storage.entrySet()) {
-            return entry.getValue();
-
-        }
-        return null;
+    public Map getAllRecords() {
+        Map<Integer, Record> copyStorage = new HashMap<>(storage);
+        return  copyStorage;
     }
 
 
