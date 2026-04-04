@@ -43,5 +43,12 @@ public class StorageServiceImpl implements StorageService {
         return copyStorage;
     }
 
+    @Override
+    public void load(Map<Integer,Record> loadedStorage){
+        storage.putAll(loadedStorage);
+        this.lastId = storage.keySet().stream().max(Integer::compare).orElse(-1);
+        System.out.println();
+    }
+
 
 }

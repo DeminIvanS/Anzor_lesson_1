@@ -50,11 +50,6 @@ public class Command {
         this.record = record;
         this.type = type;
     }
-    public Command(Record record, CommandType type) {
-        this.id = null;
-        this.record = record;
-        this.type = type;
-    }
     public Command(CommandType type) {
         this.id = null;
         this.record = null;
