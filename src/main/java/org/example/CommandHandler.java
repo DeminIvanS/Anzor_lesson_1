@@ -1,13 +1,13 @@
 package org.example;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CommandHandler {
     private final StorageService service;
 
     public CommandHandler(StorageService service) {
-
         this.service = service;
     }
 
@@ -33,9 +33,12 @@ public class CommandHandler {
                 Map<Integer,Record> copyStorage = service.getAllRecords();
 
                 //TODO: реализовать метод в сервисе возвращающую все записи.
-                yield new Result(copyStorage.values().stream().map(value->value.getValue()).toString());
-            }
-        };
+                yield new Result(copyStorage.entrySet().stream()
+                        .map(e->e.getKey() + " - " + e.getValue().getValue())
+                        .collect(Collectors.joining("\n")));
+                }
+            };
 
+        };
     }
-}
+

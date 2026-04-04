@@ -30,11 +30,10 @@ public class Parser {
     private Command parseGet(String input) {
 
         String[] words = (input.split(" "));
-        if (words.length == 1 && "GET".equals(words[0])) {
+        if (words.length == 1 && "GET".equals(words[0].toUpperCase())) {
             return parseGetAll();
         } else {
             validator.validate(input);
-            //String[] commandAndId = input.split(input);
             Integer id = Integer.parseInt(words[1]);
             return new Command(id, CommandType.GET);
         }
@@ -60,7 +59,7 @@ public class Parser {
         if (isInt(words[1])) {
             id = Integer.parseInt(words[1]);
         }
-        String text = words[3];
+        String text = words[2];
         return new Command(id, new Record(text), CommandType.UPDATE);
     }
 

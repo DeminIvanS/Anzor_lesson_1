@@ -40,7 +40,7 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public Map getAllRecords() {
         Map<Integer, Record> copyStorage = new HashMap<>(storage);
-        return  copyStorage;
+        return copyStorage;
     }
 
 
