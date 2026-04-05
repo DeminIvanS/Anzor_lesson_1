@@ -2,16 +2,15 @@ package org.example;
 
 import java.util.Scanner;
 
-public class Console {
-    FileService textService = new TextServiceImpl();
+public class Application {
+    FileService textService = new FileServiceImpl();
     Scanner scanner = new Scanner(System.in);
     StorageService service = new StorageServiceImpl(textService.reed());
     CommandHandler handler = new CommandHandler(service);
 
-
     Parser parser = new Parser();
 
-    public void read() {
+    public void start() {
         String str = "";
         while (!"exit".equals(str)) {
             try {

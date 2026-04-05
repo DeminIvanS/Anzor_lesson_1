@@ -7,8 +7,8 @@ public class StorageServiceImpl implements StorageService {
     private Map<Integer, Record> storage = new HashMap<>();
     private Integer lastId = -1;
 
-    public StorageServiceImpl(Map<Integer, Record> reedingMap) {
-        load(reedingMap);
+    public StorageServiceImpl(Map<Integer, Record> map) {
+        load(map);
     }
 
     @Override
@@ -50,7 +50,5 @@ public class StorageServiceImpl implements StorageService {
     private void load(Map<Integer, Record> loadedStorage) {
         storage.putAll(loadedStorage);
         this.lastId = storage.keySet().stream().max(Integer::compare).orElse(-1);
-        System.out.println();
     }
-
 }

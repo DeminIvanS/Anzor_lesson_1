@@ -1,5 +1,7 @@
 package org.example;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -15,6 +17,19 @@ public class ServiceImplTest {
     private Record record3 = new Record("I'm learning JavaScript");
     private Record record4 = new Record("I'm tomato");
 
+    @Before
+    public void init() {
+        testMap.put(0, record);
+        testMap.put(1, record2);
+        testMap.put(2, record3);
+        testMap.put(3, record4);
+    }
+
+    @After
+    public void clear() {
+        testMap.clear();
+
+    }
 
     @Test
     public void saveTest() {
@@ -28,16 +43,14 @@ public class ServiceImplTest {
 
         assertEquals(expected1, num1);
         assertEquals(expected2, num2);
-
+        clear();
     }
 
     @Test
     public void findByIdTest() {
-        testMap.put(0, record);
-        testMap.put(1, record2);
+        init();
 
         StorageServiceImpl storageService = new StorageServiceImpl(testMap);
-
 
         Record rec1 = storageService.findById(0);
         Record rec2 = storageService.findById(1);
@@ -46,51 +59,40 @@ public class ServiceImplTest {
 
         assertEquals(expected1, rec1);
         assertEquals(expected2, rec2);
+        clear();
     }
 
     @Test
     public void deleteTest1() {
-
-        testMap.put(0, record);
-        testMap.put(1, record2);
+        init();
         StorageServiceImpl storageService = new StorageServiceImpl(testMap);
 
         Integer expected1 = 0;
-
-        storageService.save(record);
-        storageService.save(record2);
-
         Integer num1 = storageService.deleteById(0);
         Object expected2 = storageService.findById(0);
 
         assertEquals(expected1, num1);
         assertEquals(expected2, null);
+        clear();
     }
 
     @Test
     public void deleteTest2() {
-        testMap.put(0, record);
-        testMap.put(1, record2);
+        init();
         StorageServiceImpl storageService = new StorageServiceImpl(testMap);
 
         Integer expected1 = 1;
-
-        storageService.save(record);
-        storageService.save(record2);
 
         Integer num1 = storageService.deleteById(1);
         Object expected2 = storageService.findById(1);
         assertEquals(expected1, num1);
         assertEquals(expected2, null);
-
+        clear();
     }
 
     @Test
     public void updateTest() {
-
-        testMap.put(0, record);
-        testMap.put(1, record2);
-        testMap.put(2, record3);
+        init();
 
         StorageServiceImpl storageService = new StorageServiceImpl(testMap);
 
@@ -104,14 +106,12 @@ public class ServiceImplTest {
 
         assertEquals(expected1, rec);
         assertEquals(expected2, num1);
+        clear();
     }
 
     @Test
     public void getAllTest() {
-        testMap.put(0, record);
-        testMap.put(1, record2);
-        testMap.put(2, record3);
-        testMap.put(3, record4);
+        init();
 
         List<Record> expectedRecord = List.of(record, record2, record3, record4);
         StorageServiceImpl storageService = new StorageServiceImpl(testMap);
@@ -125,5 +125,6 @@ public class ServiceImplTest {
             assertEquals(expected, actual, "Ошибка в записи с ключом: " + entry.getKey());
             index++;
         }
+        clear();
     }
 }

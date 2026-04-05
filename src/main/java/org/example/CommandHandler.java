@@ -30,16 +30,11 @@ public class CommandHandler {
             }
             case GET_ALL -> {
                 Map<Integer, Record> copyStorage = service.getAllRecords();
-
-                //TODO: реализовать метод в сервисе возвращающую все записи.
                 yield new Result(copyStorage.entrySet().stream()
                         .map(e -> e.getKey() + " - " + e.getValue().getValue())
                         .collect(Collectors.joining("\n")));
             }
         };
-
     }
-
-    ;
 }
 
