@@ -1,7 +1,9 @@
 package org.example;
 
-public interface FileService {
-    void write();
+import java.util.Map;
 
-    void reed();
+public interface FileService {
+    void write(Map<Integer, Record> allRecords);
+
+    Map reed();
 }

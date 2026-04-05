@@ -1,19 +1,19 @@
 package org.example;
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class Console {
+    FileService textService = new TextServiceImpl();
     Scanner scanner = new Scanner(System.in);
-    StorageService service = new StorageServiceImpl();
+    StorageService service = new StorageServiceImpl(textService.reed());
     CommandHandler handler = new CommandHandler(service);
-    FileService textService = new TextServiceImpl(service);
+
 
     Parser parser = new Parser();
 
     public void read() {
         String str = "";
-        textService.reed();
-
         while (!"exit".equals(str)) {
             try {
                 str = scanner.nextLine();
@@ -24,6 +24,6 @@ public class Console {
                 System.out.println(e);
             }
         }
-        textService.write();
+        textService.write(service.getAllRecords());
     }
 }

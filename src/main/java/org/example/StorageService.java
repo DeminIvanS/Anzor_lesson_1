@@ -14,7 +14,7 @@ public interface StorageService {
 
     Map<Integer, Record> getAllRecords();
 
-    void load(Map<Integer, Record> loadedStorage);
+
 
 
 }
