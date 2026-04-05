@@ -27,7 +27,7 @@ public class TextServiceImpl implements FileService {
 
     @Override
     public Map<Integer, Record> reed() {
-        Map<Integer,Record> restoredMap = Map.of();
+        Map<Integer, Record> restoredMap = Map.of();
         try (Stream<String> lines = Files.lines(Path.of("storage.txt"))) {
             restoredMap = lines
                     .map(line -> line.split(" - ", 2))
