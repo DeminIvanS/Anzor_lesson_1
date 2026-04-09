@@ -1,12 +1,15 @@
 package org.example;
 
 import java.util.HashMap;
-
 import java.util.Map;
 
 public class StorageServiceImpl implements StorageService {
     private Map<Integer, Record> storage = new HashMap<>();
     private Integer lastId = -1;
+
+    public StorageServiceImpl(Map<Integer, Record> map) {
+        load(map);
+    }
 
     @Override
     public Integer save(Record record) {
@@ -29,10 +32,10 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public Integer updateById(Integer id, Record rec) {
-        if(storage.containsKey(id)) {
+        if (storage.containsKey(id)) {
             storage.put(id, rec);
             return id;
-        }else {
+        } else {
             return null;
         }
     }
@@ -44,4 +47,8 @@ public class StorageServiceImpl implements StorageService {
     }
 
 
+    private void load(Map<Integer, Record> loadedStorage) {
+        storage.putAll(loadedStorage);
+        this.lastId = storage.keySet().stream().max(Integer::compare).orElse(-1);
+    }
 }

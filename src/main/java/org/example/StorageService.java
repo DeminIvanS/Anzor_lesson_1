@@ -14,5 +14,4 @@ public interface StorageService {
 
     Map<Integer, Record> getAllRecords();
 
-
 }
