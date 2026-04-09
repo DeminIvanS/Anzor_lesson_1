@@ -16,8 +16,6 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void write(Map<Integer, Record> storage) {
-
-        Path path = Path.of("storage.txt");
         try (var writer = Files.newBufferedWriter(FILE_PATH)) {
             storage.forEach((key, value) -> {
                 try {
@@ -38,8 +36,7 @@ public class FileServiceImpl implements FileService {
         System.out.println("Сontent has been written to the file.");
     }
 
-    @Override
-    public Map<Integer, Record> reed() {
+    public Map<Integer, Record> read() {
         Map<Integer, Record> restoredMap = new HashMap<>();
         if (!Files.exists(FILE_PATH)) {
             System.out.println("File not found. Returning empty map.");

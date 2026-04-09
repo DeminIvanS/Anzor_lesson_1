@@ -5,5 +5,5 @@ import java.util.Map;
 public interface FileService {
     void write(Map<Integer, Record> allRecords);
 
-    Map<Integer, Record> reed();
+    Map<Integer, Record> read();
 }
