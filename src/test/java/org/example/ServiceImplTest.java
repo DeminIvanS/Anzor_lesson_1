@@ -11,11 +11,11 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ServiceImplTest {
-    private Map<Integer, Record> testMap = new HashMap<>();
-    private Record record = new Record("I'm learning Java");
-    private Record record2 = new Record("I'm learning Java too");
-    private Record record3 = new Record("I'm learning JavaScript");
-    private Record record4 = new Record("I'm tomato");
+    private Map<Integer, Person> testMap = new HashMap<>();
+    private Person record = new Person("I'm learning Java");
+    private Person record2 = new Person("I'm learning Java too");
+    private Person record3 = new Person("I'm learning JavaScript");
+    private Person record4 = new Person("I'm tomato");
 
     @Before
     public void init() {
@@ -52,10 +52,10 @@ public class ServiceImplTest {
 
         StorageServiceImpl storageService = new StorageServiceImpl(testMap);
 
-        Record rec1 = storageService.findById(0);
-        Record rec2 = storageService.findById(1);
-        Record expected1 = testMap.get(0);
-        Record expected2 = testMap.get(1);
+        Person rec1 = storageService.findById(0);
+        Person rec2 = storageService.findById(1);
+        Person expected1 = testMap.get(0);
+        Person expected2 = testMap.get(1);
 
         assertEquals(expected1, rec1);
         assertEquals(expected2, rec2);
@@ -102,7 +102,7 @@ public class ServiceImplTest {
         Integer expected1 = storageService.updateById(num9, record4);
         Integer expected2 = storageService.updateById(num1, record4);
 
-        Record rec = storageService.findById(num9);
+        Person rec = storageService.findById(num9);
 
         assertEquals(expected1, rec);
         assertEquals(expected2, num1);
@@ -113,14 +113,14 @@ public class ServiceImplTest {
     public void getAllTest() {
         init();
 
-        List<Record> expectedRecord = List.of(record, record2, record3, record4);
+        List<Person> expectedRecord = List.of(record, record2, record3, record4);
         StorageServiceImpl storageService = new StorageServiceImpl(testMap);
 
-        Map<Integer, Record> copyStorage = storageService.getAllRecords();
+        Map<Integer, Person> copyStorage = storageService.getAllRecords();
         int index = 0;
-        for (Map.Entry<Integer, Record> entry : copyStorage.entrySet()) {
-            Record expected = expectedRecord.get(index);
-            Record actual = entry.getValue();
+        for (Map.Entry<Integer, Person> entry : copyStorage.entrySet()) {
+            Person expected = expectedRecord.get(index);
+            Person actual = entry.getValue();
 
             assertEquals(expected, actual, "Ошибка в записи с ключом: " + entry.getKey());
             index++;

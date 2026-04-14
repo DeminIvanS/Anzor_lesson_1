@@ -13,8 +13,8 @@ public class CommandHandler {
     public Result handle(Command command) {
         return switch (command.getType()) {
             case GET -> {
-                Record record = service.findById(command.getId());
-                yield new Result(record.getValue());
+                Person record = service.findById(command.getId());
+                yield new Result(record.getName());
             }
             case CREATE -> {
                 Integer id = service.save(command.getRecord());
@@ -29,9 +29,9 @@ public class CommandHandler {
                 yield new Result(String.format("String with id = %s deleted", command.getId()));
             }
             case GET_ALL -> {
-                Map<Integer, Record> copyStorage = service.getAllRecords();
+                Map<Integer, Person> copyStorage = service.getAllRecords();
                 yield new Result(copyStorage.entrySet().stream()
-                        .map(e -> e.getKey() + " - " + e.getValue().getValue())
+                        .map(e -> e.getKey() + " - " + e.getValue().getName())
                         .collect(Collectors.joining("\n")));
             }
         };

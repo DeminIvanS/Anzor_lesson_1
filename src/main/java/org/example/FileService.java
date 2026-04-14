@@ -3,7 +3,7 @@ package org.example;
 import java.util.Map;
 
 public interface FileService {
-    void write(Map<Integer, Record> allRecords);
+    void write(Map<Integer, Person> allRecords);
 
-    Map<Integer, Record> read();
+    Map<Integer, Person> read();
 }

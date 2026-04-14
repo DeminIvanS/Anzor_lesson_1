@@ -1,25 +1,28 @@
 package org.example;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class StorageServiceImpl implements StorageService {
-    private Map<Integer, Record> storage = new HashMap<>();
+    private Map<Integer, Person> storage = new HashMap<>();
     private Integer lastId = -1;
 
-    public StorageServiceImpl(Map<Integer, Record> map) {
+    public StorageServiceImpl(Map<Integer, Person> map) {
         load(map);
     }
 
     @Override
-    public Integer save(Record record) {
+    public Integer save(Person record) {
         lastId++;
         storage.put(lastId, record);
         return lastId;
     }
 
     @Override
-    public Record findById(Integer id) {
+    public Person findById(Integer id) {
 
         return storage.get(id);
     }
@@ -31,7 +34,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public Integer updateById(Integer id, Record rec) {
+    public Integer updateById(Integer id, Person rec) {
         if (storage.containsKey(id)) {
             storage.put(id, rec);
             return id;
@@ -42,13 +45,18 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public Map getAllRecords() {
-        Map<Integer, Record> copyStorage = new HashMap<>(storage);
+        Map<Integer, Person> copyStorage = new HashMap<>(storage);
         return copyStorage;
     }
 
 
-    private void load(Map<Integer, Record> loadedStorage) {
+    private void load(Map<Integer, Person> loadedStorage) {
         storage.putAll(loadedStorage);
         this.lastId = storage.keySet().stream().max(Integer::compare).orElse(-1);
+    }
+    public String toJson(Person person) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(person);
+        return json;
     }
 }

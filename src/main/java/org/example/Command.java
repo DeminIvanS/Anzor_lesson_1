@@ -4,11 +4,16 @@ import java.util.Objects;
 
 public class Command {
     private final Integer id;
-    private final Record record;
+    private final Person record;
     private final CommandType type;
 
-    public Command(Integer id, Record record, CommandType type) {
+    public Command(Integer id, Person record, CommandType type) {
         this.id = id;
+        this.record = record;
+        this.type = type;
+    }
+    public Command( Person record, CommandType type) {
+        this.id = null;
         this.record = record;
         this.type = type;
     }
@@ -29,7 +34,7 @@ public class Command {
         return id;
     }
 
-    public Record getRecord() {
+    public Person getRecord() {
         return record;
     }
 

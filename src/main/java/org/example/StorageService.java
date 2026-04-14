@@ -4,14 +4,14 @@ import java.util.Map;
 
 public interface StorageService {
 
-    Integer save(Record record);
+    Integer save(Person record);
 
-    Record findById(Integer id);
+    Person findById(Integer id);
 
     Integer deleteById(Integer id);
 
-    Integer updateById(Integer id, Record rec);
+    Integer updateById(Integer id, Person rec);
 
-    Map<Integer, Record> getAllRecords();
+    Map<Integer, Person> getAllRecords();
 
 }

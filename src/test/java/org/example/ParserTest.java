@@ -1,5 +1,6 @@
 package org.example;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -7,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ParserTest {
     private Parser parser = new Parser();
     @Test
-    public void parseGetTest(){
+    public void parseGetTest() throws JsonProcessingException {
         // given
         String input = "Get 1";
         Command expected = new Command(1,CommandType.GET);
@@ -43,7 +44,7 @@ public class ParserTest {
         String[] words = input.split(" ", 3);
 
 
-        Command expected = new Command(Integer.parseInt(words[1]), new Record(words[2]), CommandType.UPDATE);
+        Command expected = new Command(Integer.parseInt(words[1]), new Person(words[2]), CommandType.UPDATE);
         Command command = parser.parse(input);
 
         assertEquals(expected, command);
@@ -55,7 +56,7 @@ public class ParserTest {
         String[] words = input.split(" ", 3);
 
 
-        Command expected = new Command(2, new Record(words[1]), CommandType.CREATE);
+        Command expected = new Command(2, new Person(words[1]), CommandType.CREATE);
         Command command = parser.parse(input);
 
         assertEquals(expected, command);
