@@ -19,18 +19,16 @@ public class ParserTest {
 
     }
     @Test
-    public void parseGetAllTest(){
+    public void parseGetAllTest() throws JsonProcessingException {
         String input = "GET";
-
 
         Command expected = new Command(null, null, CommandType.GET_ALL);
         Command command = parser.parse(input);
 
-
         assertEquals(expected, command);
     }
     @Test
-    public void parseDeleteTest(){
+    public void parseDeleteTest() throws JsonProcessingException {
         String input = "delete 2";
 
         Command expected = new Command(2, null, CommandType.DELETE);
@@ -39,24 +37,24 @@ public class ParserTest {
         assertEquals(expected, command);
     }
     @Test
-    public void parseUpdateTest(){
-        String input = "update 1 dsgf";
+    public void parseUpdateTest() throws JsonProcessingException {
+        String input = "update 1 {\"name\": \"Vas\", \"age\": 29}";
         String[] words = input.split(" ", 3);
 
 
-        Command expected = new Command(Integer.parseInt(words[1]), new Person(words[2]), CommandType.UPDATE);
+        Command expected = new Command(Integer.parseInt(words[1]), parser.toPerson(words[2]), CommandType.UPDATE);
         Command command = parser.parse(input);
 
         assertEquals(expected, command);
     }
 
     @Test
-    public void parseCreateTest(){
-        String input = "create dsgf";
-        String[] words = input.split(" ", 3);
+    public void parseCreateTest() throws JsonProcessingException {
+        String input = "create {\"name\":\"Vasy\",\"age\": 27}";
+        String[] words = input.split(" ", 2);
 
 
-        Command expected = new Command(2, new Person(words[1]), CommandType.CREATE);
+        Command expected = new Command(null, parser.toPerson(words[1]), CommandType.CREATE);
         Command command = parser.parse(input);
 
         assertEquals(expected, command);

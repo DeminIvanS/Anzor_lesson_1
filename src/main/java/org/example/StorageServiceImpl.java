@@ -23,7 +23,6 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public Person findById(Integer id) {
-
         return storage.get(id);
     }
 
@@ -34,9 +33,9 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public Integer updateById(Integer id, Person rec) {
+    public Integer updateById(Integer id, Person person) {
         if (storage.containsKey(id)) {
-            storage.put(id, rec);
+            storage.put(id, person);
             return id;
         } else {
             return null;

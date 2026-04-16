@@ -54,7 +54,7 @@ public class Validator {
     }
 
     private void validateCreate(String input) {
-        String[] words = input.split(" ", 3);
+        String[] words = input.split(" ", 2);
         if (words.length < 2) {
             throw new IllegalArgumentException("Wrong string");
         }

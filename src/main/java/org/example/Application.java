@@ -1,11 +1,12 @@
 package org.example;
 
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Application {
     FileService textService = new FileServiceImpl();
     Scanner scanner = new Scanner(System.in);
-    StorageService service = new StorageServiceImpl(textService.read());
+    StorageService service = new StorageServiceImpl(Collections.emptyMap());
     CommandHandler handler = new CommandHandler(service);
 
     Parser parser = new Parser();

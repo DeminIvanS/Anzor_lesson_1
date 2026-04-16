@@ -1,5 +1,6 @@
 package org.example;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -11,11 +12,15 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ServiceImplTest {
+    Parser parser = new Parser();
     private Map<Integer, Person> testMap = new HashMap<>();
-    private Person record = new Person("I'm learning Java");
-    private Person record2 = new Person("I'm learning Java too");
-    private Person record3 = new Person("I'm learning JavaScript");
-    private Person record4 = new Person("I'm tomato");
+    private Person record = parser.toPerson("{\"name\":\"Vasily\",\"age\":\"29\"}");
+    private Person record2 = parser.toPerson("{\"name\":\"Nikolay\",\"age\":\"51\"}");
+    private Person record3 = parser.toPerson("{\"name\":\"Mary\",\"age\":\"22\"}");
+    private Person record4 = parser.toPerson("{\"name\":\"Elon\",\"age\":\"61\"}");
+
+    public ServiceImplTest() throws JsonProcessingException {
+    }
 
     @Before
     public void init() {

@@ -60,7 +60,6 @@ public class Parser {
     }
 
     private Command parseUpdate(String input) throws JsonProcessingException {
-
         String[] words = input.split(" ", 3);
         Person person = null;
         Integer id = null;
@@ -70,7 +69,6 @@ public class Parser {
         if(isValidJson(words[2])){
             person = toPerson(words[2]);
         }
-        String text = words[2];
         return new Command(id, person, CommandType.UPDATE);
     }
 
@@ -84,13 +82,12 @@ public class Parser {
         return new Command(id, CommandType.DELETE);
     }
 
-
     public Person toPerson(String json) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         Person person = objectMapper.readValue(json, Person.class);
-
         return person;
     }
+
     private static boolean isValidJson(String json){
         ObjectMapper object = new ObjectMapper();
         try {

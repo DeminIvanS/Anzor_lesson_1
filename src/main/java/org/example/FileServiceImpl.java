@@ -35,7 +35,6 @@ public class FileServiceImpl implements FileService {
         } catch (IOException | UncheckedIOException e) {
             e.printStackTrace();
         }
-
         System.out.println("Сontent has been written to the file.");
     }
 
@@ -69,7 +68,6 @@ public class FileServiceImpl implements FileService {
     public Person toPerson(String json) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         Person person = objectMapper.readValue(json, Person.class);
-
         return person;
     }
 

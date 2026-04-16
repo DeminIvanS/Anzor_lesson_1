@@ -4,29 +4,29 @@ import java.util.Objects;
 
 public class Command {
     private final Integer id;
-    private final Person record;
+    private final Person person;
     private final CommandType type;
 
-    public Command(Integer id, Person record, CommandType type) {
+    public Command(Integer id, Person person, CommandType type) {
         this.id = id;
-        this.record = record;
+        this.person = person;
         this.type = type;
     }
-    public Command( Person record, CommandType type) {
+    public Command(Person person, CommandType type) {
         this.id = null;
-        this.record = record;
+        this.person = person;
         this.type = type;
     }
 
     public Command(CommandType type) {
         this.id = null;
-        this.record = null;
+        this.person = null;
         this.type = type;
     }
 
     public Command(Integer id, CommandType type) {
         this.id = id;
-        this.record = null;
+        this.person = null;
         this.type = type;
     }
 
@@ -34,8 +34,8 @@ public class Command {
         return id;
     }
 
-    public Person getRecord() {
-        return record;
+    public Person getPerson() {
+        return person;
     }
 
     public CommandType getType() {
@@ -47,13 +47,13 @@ public class Command {
         if (o == null || getClass() != o.getClass()) return false;
 
         Command command = (Command) o;
-        return Objects.equals(id, command.id) && Objects.equals(record, command.record) && type == command.type;
+        return Objects.equals(id, command.id) && Objects.equals(person, command.person) && type == command.type;
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hashCode(id);
-        result = 31 * result + Objects.hashCode(record);
+        result = 31 * result + Objects.hashCode(person);
         result = 31 * result + Objects.hashCode(type);
         return result;
     }
@@ -62,7 +62,7 @@ public class Command {
     public String toString() {
         return "Command{" +
                 "id=" + id +
-                ", record=" + record +
+                ", person=" + person +
                 ", type=" + type +
                 '}';
     }
