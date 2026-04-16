@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Application {
     FileService textService = new FileServiceImpl();
     Scanner scanner = new Scanner(System.in);
-    StorageService service = new StorageServiceImpl(Collections.emptyMap());
+    StorageService service = new InMemoryServiceImpl(Collections.emptyMap());
     CommandHandler handler = new CommandHandler(service);
 
     Parser parser = new Parser();

@@ -39,7 +39,7 @@ public class ServiceImplTest {
     @Test
     public void saveTest() {
 
-        StorageServiceImpl storageService = new StorageServiceImpl(testMap);
+        InMemoryServiceImpl storageService = new InMemoryServiceImpl(testMap);
 
         Integer expected1 = 0;
         Integer expected2 = 1;
@@ -55,7 +55,7 @@ public class ServiceImplTest {
     public void findByIdTest() {
         init();
 
-        StorageServiceImpl storageService = new StorageServiceImpl(testMap);
+        InMemoryServiceImpl storageService = new InMemoryServiceImpl(testMap);
 
         Person rec1 = storageService.findById(0);
         Person rec2 = storageService.findById(1);
@@ -70,7 +70,7 @@ public class ServiceImplTest {
     @Test
     public void deleteTest1() {
         init();
-        StorageServiceImpl storageService = new StorageServiceImpl(testMap);
+        InMemoryServiceImpl storageService = new InMemoryServiceImpl(testMap);
 
         Integer expected1 = 0;
         Integer num1 = storageService.deleteById(0);
@@ -84,7 +84,7 @@ public class ServiceImplTest {
     @Test
     public void deleteTest2() {
         init();
-        StorageServiceImpl storageService = new StorageServiceImpl(testMap);
+        InMemoryServiceImpl storageService = new InMemoryServiceImpl(testMap);
 
         Integer expected1 = 1;
 
@@ -99,7 +99,7 @@ public class ServiceImplTest {
     public void updateTest() {
         init();
 
-        StorageServiceImpl storageService = new StorageServiceImpl(testMap);
+        InMemoryServiceImpl storageService = new InMemoryServiceImpl(testMap);
 
         Integer num9 = 9;
         Integer num1 = 1;
@@ -119,7 +119,7 @@ public class ServiceImplTest {
         init();
 
         List<Person> expectedRecord = List.of(record, record2, record3, record4);
-        StorageServiceImpl storageService = new StorageServiceImpl(testMap);
+        InMemoryServiceImpl storageService = new InMemoryServiceImpl(testMap);
 
         Map<Integer, Person> copyStorage = storageService.getAllRecords();
         int index = 0;

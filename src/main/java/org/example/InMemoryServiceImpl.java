@@ -6,11 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StorageServiceImpl implements StorageService {
+public class InMemoryServiceImpl implements StorageService {
     private Map<Integer, Person> storage = new HashMap<>();
     private Integer lastId = -1;
 
-    public StorageServiceImpl(Map<Integer, Person> map) {
+    public InMemoryServiceImpl(Map<Integer, Person> map) {
         load(map);
     }
 
