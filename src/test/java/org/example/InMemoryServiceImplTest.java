@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FileServiceImplTest {
+public class InMemoryServiceImplTest {
     Parser parser = new Parser();
     private Map<Integer, Person> testMap = new HashMap<>();
     private Person record = parser.toPerson("{\"name\":\"Vasily\",\"age\":\"29\"}");
@@ -20,7 +20,7 @@ public class FileServiceImplTest {
     private Person record3 = parser.toPerson("{\"name\":\"Mary\",\"age\":\"22\"}");
     private Person record4 = parser.toPerson("{\"name\":\"Elon\",\"age\":\"61\"}");
 
-    public FileServiceImplTest() throws JsonProcessingException {
+    public InMemoryServiceImplTest() throws JsonProcessingException {
     }
 
     @BeforeEach
