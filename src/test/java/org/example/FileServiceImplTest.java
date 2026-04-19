@@ -1,17 +1,18 @@
 package org.example;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ServiceImplTest {
+public class FileServiceImplTest {
     Parser parser = new Parser();
     private Map<Integer, Person> testMap = new HashMap<>();
     private Person record = parser.toPerson("{\"name\":\"Vasily\",\"age\":\"29\"}");
@@ -19,10 +20,10 @@ public class ServiceImplTest {
     private Person record3 = parser.toPerson("{\"name\":\"Mary\",\"age\":\"22\"}");
     private Person record4 = parser.toPerson("{\"name\":\"Elon\",\"age\":\"61\"}");
 
-    public ServiceImplTest() throws JsonProcessingException {
+    public FileServiceImplTest() throws JsonProcessingException {
     }
 
-    @Before
+    @BeforeEach
     public void init() {
         testMap.put(0, record);
         testMap.put(1, record2);
@@ -30,16 +31,14 @@ public class ServiceImplTest {
         testMap.put(3, record4);
     }
 
-    @After
+    @AfterEach
     public void clear() {
         testMap.clear();
-
     }
 
     @Test
     public void saveTest() {
-
-        StorageServiceImpl storageService = new StorageServiceImpl(testMap);
+        StorageServiceImpl storageService = new StorageServiceImpl(Map.of());
 
         Integer expected1 = 0;
         Integer expected2 = 1;
@@ -48,13 +47,10 @@ public class ServiceImplTest {
 
         assertEquals(expected1, num1);
         assertEquals(expected2, num2);
-        clear();
     }
 
     @Test
     public void findByIdTest() {
-        init();
-
         StorageServiceImpl storageService = new StorageServiceImpl(testMap);
 
         Person rec1 = storageService.findById(0);
@@ -64,12 +60,10 @@ public class ServiceImplTest {
 
         assertEquals(expected1, rec1);
         assertEquals(expected2, rec2);
-        clear();
     }
 
     @Test
     public void deleteTest1() {
-        init();
         StorageServiceImpl storageService = new StorageServiceImpl(testMap);
 
         Integer expected1 = 0;
@@ -78,12 +72,10 @@ public class ServiceImplTest {
 
         assertEquals(expected1, num1);
         assertEquals(expected2, null);
-        clear();
     }
 
     @Test
     public void deleteTest2() {
-        init();
         StorageServiceImpl storageService = new StorageServiceImpl(testMap);
 
         Integer expected1 = 1;
@@ -92,13 +84,10 @@ public class ServiceImplTest {
         Object expected2 = storageService.findById(1);
         assertEquals(expected1, num1);
         assertEquals(expected2, null);
-        clear();
     }
 
     @Test
     public void updateTest() {
-        init();
-
         StorageServiceImpl storageService = new StorageServiceImpl(testMap);
 
         Integer num9 = 9;
@@ -111,13 +100,10 @@ public class ServiceImplTest {
 
         assertEquals(expected1, rec);
         assertEquals(expected2, num1);
-        clear();
     }
 
     @Test
     public void getAllTest() {
-        init();
-
         List<Person> expectedRecord = List.of(record, record2, record3, record4);
         StorageServiceImpl storageService = new StorageServiceImpl(testMap);
 
@@ -130,6 +116,5 @@ public class ServiceImplTest {
             assertEquals(expected, actual, "Ошибка в записи с ключом: " + entry.getKey());
             index++;
         }
-        clear();
     }
 }

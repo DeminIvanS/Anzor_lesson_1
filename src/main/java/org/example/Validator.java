@@ -16,7 +16,7 @@ public class Validator {
                 case "UPDATE" -> validateUpdate(input);
                 case "DELETE" -> validateDelete(input);
                 case "CREATE" -> validateCreate(input);
-                default -> throw new IllegalArgumentException("Wrong string");
+                default -> throw new IllegalArgumentException("Wrong command");
             }
         }
     }
@@ -56,16 +56,12 @@ public class Validator {
     private void validateCreate(String input) {
         String[] words = input.split(" ", 2);
         if (words.length < 2) {
-            throw new IllegalArgumentException("Wrong string");
+            throw new IllegalArgumentException("Wrong command");
         }
         if (!isValidJson(words[1])) {
             throw new IllegalArgumentException("It's not json");
         }
-        if (!"CREATE".equals(words[0].toUpperCase())) {
-            throw new IllegalArgumentException("Wrong command");
-        }
     }
-
     private void validateUpdate(String input) {
         String[] words = input.split(" ", 3);
         if (words.length < 3) {

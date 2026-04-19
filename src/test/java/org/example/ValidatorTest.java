@@ -9,7 +9,7 @@ public class ValidatorTest {
 
     @Test
     public void updateOkTest(){
-        String input = "UPDATE 2 lksjdfhgk jkhlg";
+        String input = "UPDATE 2 {\"name\":\"Vasily\",\"age\":\"29\"}";
         assertDoesNotThrow(() -> validator.validate(input));
     }
     @Test
@@ -40,23 +40,23 @@ public class ValidatorTest {
                 IllegalArgumentException.class,
                 () -> validator.validate(input)
         );
-        assertEquals("Wrong string", ex.getMessage());
+        assertEquals("Wrong command", ex.getMessage());
     }
 
     @Test
     public void createOkTest(){
-        String input = "create jkhlg sdg";
+        String input = "create {\"name\":\"Vasily\",\"age\":\"29\"}";
         assertDoesNotThrow(() -> validator.validate(input));
     }
     @Test
     public void createFailsTest1(){
-        String input = "create ";
+        String input = "create {\"name\":\"Vasily\",\"age\"\"29\"}";
 
         Exception ex = assertThrows(
                 IllegalArgumentException.class,
                 () -> validator.validate(input)
         );
-        assertEquals("Wrong command", ex.getMessage());
+        assertEquals("It's not json", ex.getMessage());
     }
     @Test
     public void createFailsTest2(){
@@ -66,7 +66,7 @@ public class ValidatorTest {
                 IllegalArgumentException.class,
                 () -> validator.validate(input)
         );
-        assertEquals("Empty string", ex.getMessage());
+        assertEquals("It's not json", ex.getMessage());
     }
     @Test
     public void createFailsTest3(){
@@ -76,7 +76,7 @@ public class ValidatorTest {
                 IllegalArgumentException.class,
                 () -> validator.validate(input)
         );
-        assertEquals("Wrong string", ex.getMessage());
+        assertEquals("Wrong command", ex.getMessage());
     }
 
     @Test
