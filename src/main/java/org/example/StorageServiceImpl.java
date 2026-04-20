@@ -1,13 +1,10 @@
 package org.example;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class StorageServiceImpl implements StorageService {
-    private Map<Integer, Person> storage = new HashMap<>();
+    private final Map<Integer, Person> storage = new HashMap<>();
     private Integer lastId = -1;
 
     public StorageServiceImpl(Map<Integer, Person> map) {
@@ -48,14 +45,8 @@ public class StorageServiceImpl implements StorageService {
         return copyStorage;
     }
 
-
     private void load(Map<Integer, Person> loadedStorage) {
         storage.putAll(loadedStorage);
         this.lastId = storage.keySet().stream().max(Integer::compare).orElse(-1);
-    }
-    public String toJson(Person person) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(person);
-        return json;
     }
 }

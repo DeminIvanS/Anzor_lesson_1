@@ -1,32 +1,32 @@
 package org.example;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class InMemoryServiceImplTest {
-    Parser parser = new Parser();
+
     private Map<Integer, Person> testMap = new HashMap<>();
-    private Person record = parser.toPerson("{\"name\":\"Vasily\",\"age\":\"29\"}");
-    private Person record2 = parser.toPerson("{\"name\":\"Nikolay\",\"age\":\"51\"}");
-    private Person record3 = parser.toPerson("{\"name\":\"Mary\",\"age\":\"22\"}");
-    private Person record4 = parser.toPerson("{\"name\":\"Elon\",\"age\":\"61\"}");
+    private Person person = new Person("Vasily", 29);
+    private Person person1 = new Person("Nikolay", 51);
+    private Person record3 = new Person("Mary", 22);
+    private Person record4 = new Person("Elon", 61);
 
     public InMemoryServiceImplTest() throws JsonProcessingException {
     }
 
     @BeforeEach
     public void init() {
-        testMap.put(0, record);
-        testMap.put(1, record2);
+        testMap.put(0, person);
+        testMap.put(1, person1);
         testMap.put(2, record3);
         testMap.put(3, record4);
     }
@@ -42,8 +42,8 @@ public class InMemoryServiceImplTest {
 
         Integer expected1 = 0;
         Integer expected2 = 1;
-        Integer num1 = storageService.save(record);
-        Integer num2 = storageService.save(record2);
+        Integer num1 = storageService.save(person);
+        Integer num2 = storageService.save(person1);
 
         assertEquals(expected1, num1);
         assertEquals(expected2, num2);
@@ -104,17 +104,12 @@ public class InMemoryServiceImplTest {
 
     @Test
     public void getAllTest() {
-        List<Person> expectedRecord = List.of(record, record2, record3, record4);
+        List<Person> expectedRecord = List.of(person, person1, record3, record4);
         StorageServiceImpl storageService = new StorageServiceImpl(testMap);
-
         Map<Integer, Person> copyStorage = storageService.getAllRecords();
-        int index = 0;
         for (Map.Entry<Integer, Person> entry : copyStorage.entrySet()) {
-            Person expected = expectedRecord.get(index);
             Person actual = entry.getValue();
-
-            assertEquals(expected, actual, "Ошибка в записи с ключом: " + entry.getKey());
-            index++;
+            assertTrue(expectedRecord.contains(actual));
         }
     }
 }

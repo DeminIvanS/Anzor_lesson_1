@@ -4,8 +4,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Validator {
+    private static boolean isValidJson(String json) {
+        ObjectMapper object = new ObjectMapper();
+        try {
+            object.readTree(json);
+        } catch (JsonProcessingException e) {
+            return false;
+        }
+        return true;
+    }
+
     public void validate(String input) {
-        String[] words = input.split(" ",3);
+        String[] words = input.split(" ", 3);
         if (words.length == 1) {
             validateGetAll(words[0]);
         } else {
@@ -62,6 +72,7 @@ public class Validator {
             throw new IllegalArgumentException("It's not json");
         }
     }
+
     private void validateUpdate(String input) {
         String[] words = input.split(" ", 3);
         if (words.length < 3) {
@@ -76,15 +87,6 @@ public class Validator {
         if (!isValidJson(words[2])) {
             throw new IllegalArgumentException("It's not json");
         }
-    }
-    private static boolean isValidJson(String json){
-        ObjectMapper object = new ObjectMapper();
-        try {
-            object.readTree(json);
-        }catch (JsonProcessingException e ){
-            return false;
-        }
-        return true;
     }
 
     private boolean isInt(String string) {
