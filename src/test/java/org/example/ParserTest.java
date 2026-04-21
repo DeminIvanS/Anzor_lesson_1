@@ -38,7 +38,7 @@ public class ParserTest {
     }
     @Test
     public void parseUpdateTest() throws JsonProcessingException {
-        String input = "update 1 {\"name\": \"Vas\", \"age\": 29}";
+        String input = "update 1 {\"name\":\"Vas\",\"age\": 29}";
         String[] words = input.split(" ", 3);
 
 

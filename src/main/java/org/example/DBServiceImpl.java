@@ -10,12 +10,13 @@ import java.util.Map;
 public class DBServiceImpl implements StorageService{
 
 
+
+
     @Override
     public Integer save(Person record) {
         String sql = "insert into person (name, age) VALUES (?, ?)";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
-
         ){
             statement.setString(1, record.getName());
             statement.setInt(2,record.getAge());
@@ -25,7 +26,23 @@ public class DBServiceImpl implements StorageService{
             throw new RuntimeException("Ошибка записи данных их бд: " + e.getMessage());
             //TODO: возвращать последний вставленный id
         }
-        return 0;
+        return lastId();
+    }
+    private Integer lastId(){
+        String sql = "select id from person order by id desc limit 1";
+        Integer lastId = null;
+        try (Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+        ){
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                lastId = result.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return lastId;
     }
 
 
@@ -61,7 +78,7 @@ public class DBServiceImpl implements StorageService{
         }catch (SQLException e){
             throw new RuntimeException("Ошибка записи данных их бд: " + e.getMessage());
         }
-        return 0;
+        return id;
     }
 
     @Override
@@ -88,19 +105,19 @@ public class DBServiceImpl implements StorageService{
              PreparedStatement statement = connection.prepareStatement(sql);
         ){
             try (ResultSet rs = statement.executeQuery()){
-                Map<Integer, Person> m = new HashMap<>();
+                Map<Integer, Person> map = new HashMap<>();
                 while (rs.next()){
                     Person person = new Person();
                     person.setName(rs.getString("name"));
                     person.setAge(rs.getInt("age"));
-                    m.put(rs.getInt("id"), person);
+                    map.put(rs.getInt("id"), person);
                 }
-                return m;
+                return map;
             }
 
         }catch (SQLException e){
             throw new RuntimeException("Ошибка записи данных их бд: " + e.getMessage());
         }
-        //return Map.of();
+
     }
 }

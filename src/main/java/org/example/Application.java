@@ -6,7 +6,7 @@ public class Application {
     FileService textService = new FileServiceImpl();
     Scanner scanner = new Scanner(System.in);
 
-    StorageService service = new StorageServiceImpl(textService.read());
+    StorageService service = new DBServiceImpl();
     CommandHandler handler = new CommandHandler(service);
 
     Parser parser = new Parser();
