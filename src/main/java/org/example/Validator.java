@@ -1,10 +1,23 @@
 package org.example;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Validator {
+    private static boolean isValidJson(String json) {
+        ObjectMapper object = new ObjectMapper();
+        try {
+            object.readTree(json);
+        } catch (JsonProcessingException e) {
+            return false;
+        }
+        return true;
+    }
+
     public void validate(String input) {
-        String[] words = getSplit(input);
+        String[] words = input.split(" ", 3);
         if (words.length == 1) {
-            validateGetAll(input);
+            validateGetAll(words[0]);
         } else {
 
             String[] args = input.split(" ");
@@ -13,67 +26,66 @@ public class Validator {
                 case "UPDATE" -> validateUpdate(input);
                 case "DELETE" -> validateDelete(input);
                 case "CREATE" -> validateCreate(input);
-                default -> throw new IllegalArgumentException("Wrong string");
+                default -> throw new IllegalArgumentException("Wrong command");
             }
         }
     }
 
     private void validateGetAll(String input) {
-        if (!"GET".equals(getSplit(input)[0].toUpperCase())) {
+        if (!"GET".equals(input.toUpperCase())) {
             throw new IllegalArgumentException("Wrong command");
         }
     }
 
-    private String[] getSplit(String input) {
-        String[] args = input.split(" ");
-        return args;
-    }
-
     private void validateGet(String input) {
-        if (getSplit(input).length > 2) {
+        String[] words = input.split(" ", 3);
+        if (words.length > 2) {
             throw new IllegalArgumentException("Wrong string");
         }
-        if (!isInt(getSplit(input)[1])) {
+        if (!isInt(words[1])) {
             throw new IllegalArgumentException("Wrong id");
         }
-        if (!"GET".equals(getSplit(input)[0].toUpperCase())) {
+        if (!"GET".equals(words[0].toUpperCase())) {
             throw new IllegalArgumentException("Wrong command");
         }
     }
 
     private void validateDelete(String input) {
-        if (getSplit(input).length > 2) {
+        String[] words = input.split(" ", 3);
+        if (words.length > 2) {
             throw new IllegalArgumentException("Wrong string");
         }
-        if (!isInt(getSplit(input)[1])) {
+        if (!isInt(words[1])) {
             throw new IllegalArgumentException("Wrong id");
         }
-        if (!"DELETE".equals(getSplit(input)[0].toUpperCase())) {
+        if (!"DELETE".equals(words[0].toUpperCase())) {
             throw new IllegalArgumentException("Wrong command");
         }
     }
 
     private void validateCreate(String input) {
-        if (getSplit(input).length < 2) {
-            throw new IllegalArgumentException("Wrong string");
-        }
-        if (getSplit(input)[1].isBlank()) {
-            throw new IllegalArgumentException("Empty string");
-        }
-        if (!"CREATE".equals(getSplit(input)[0].toUpperCase())) {
+        String[] words = input.split(" ", 2);
+        if (words.length < 2) {
             throw new IllegalArgumentException("Wrong command");
+        }
+        if (!isValidJson(words[1])) {
+            throw new IllegalArgumentException("It's not json");
         }
     }
 
     private void validateUpdate(String input) {
-        if (getSplit(input).length < 3) {
+        String[] words = input.split(" ", 3);
+        if (words.length < 3) {
             throw new IllegalArgumentException("Wrong string");
         }
-        if (!isInt(getSplit(input)[1])) {
+        if (!isInt(words[1])) {
             throw new IllegalArgumentException("Wrong id");
         }
-        if (!"UPDATE".equals(getSplit(input)[0].toUpperCase())) {
+        if (!"UPDATE".equals(words[0].toUpperCase())) {
             throw new IllegalArgumentException("Wrong command");
+        }
+        if (!isValidJson(words[2])) {
+            throw new IllegalArgumentException("It's not json");
         }
     }
 

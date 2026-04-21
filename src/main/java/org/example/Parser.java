@@ -1,11 +1,15 @@
 package org.example;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Parser {
 
-
     private final Validator validator = new Validator();
+    private ObjectMapper objectMapper = new ObjectMapper();
+    //UPDATE 3 {"name":"Петя","age":16}
 
-    public Command parse(String string) {
+    public Command parse(String string) throws JsonProcessingException {
         String[] text = string.split(" ", 2);
         String command = text[0];
         validator.validate(string);
@@ -42,25 +46,26 @@ public class Parser {
     private Command parseGetAll() {
         return new Command(CommandType.GET_ALL);
     }
+//UPDATE 3 {"name":"Петя","age":16}
 
+    private Command parseCreate(String input) throws JsonProcessingException {
+        Person person = null;
+        String[] words = input.split(" ", 2);
+        person = toPerson(words[1]);
+        //TODO: Json -> objectMapper = Person
 
-    private Command parseCreate(String input) {
-
-        String[] text = input.split(" ", 2);
-        String string = text[1];
-        return new Command(2, new Record(string), CommandType.CREATE);
+        return new Command(person, CommandType.CREATE);
     }
 
-    private Command parseUpdate(String input) {
-
+    private Command parseUpdate(String input) throws JsonProcessingException {
         String[] words = input.split(" ", 3);
-
+        Person person = null;
         Integer id = null;
         if (isInt(words[1])) {
             id = Integer.parseInt(words[1]);
         }
-        String text = words[2];
-        return new Command(id, new Record(text), CommandType.UPDATE);
+        person = toPerson(words[2]);
+        return new Command(id, person, CommandType.UPDATE);
     }
 
     private Command parseDelete(String input) {
@@ -71,5 +76,11 @@ public class Parser {
             id = Integer.parseInt(words[1]);
         }
         return new Command(id, CommandType.DELETE);
+    }
+
+    public Person toPerson(String json) throws JsonProcessingException {
+
+        Person person = objectMapper.readValue(json, Person.class);
+        return person;
     }
 }
