@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Parser {
 
-
     private final Validator validator = new Validator();
+    private ObjectMapper objectMapper = new ObjectMapper();
     //UPDATE 3 {"name":"Петя","age":16}
 
     public Command parse(String string) throws JsonProcessingException {
@@ -51,11 +51,9 @@ public class Parser {
     private Command parseCreate(String input) throws JsonProcessingException {
         Person person = null;
         String[] words = input.split(" ", 2);
-
+        person = toPerson(words[1]);
         //TODO: Json -> objectMapper = Person
-        if(isValidJson(words[1])){
-           person = toPerson(words[1]);
-        }
+
         return new Command(person, CommandType.CREATE);
     }
 
@@ -66,9 +64,7 @@ public class Parser {
         if (isInt(words[1])) {
             id = Integer.parseInt(words[1]);
         }
-        if(isValidJson(words[2])){
-            person = toPerson(words[2]);
-        }
+        person = toPerson(words[2]);
         return new Command(id, person, CommandType.UPDATE);
     }
 
@@ -83,18 +79,8 @@ public class Parser {
     }
 
     public Person toPerson(String json) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
+
         Person person = objectMapper.readValue(json, Person.class);
         return person;
-    }
-
-    private static boolean isValidJson(String json){
-        ObjectMapper object = new ObjectMapper();
-        try {
-            object.readTree(json);
-        }catch (JsonProcessingException e ){
-            return false;
-        }
-        return true;
     }
 }
