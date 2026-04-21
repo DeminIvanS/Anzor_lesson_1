@@ -1,0 +1,18 @@
+version: '3.1'
+
+volumes:
+  lesson_1:
+
+services:
+  pg_db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=project_db
+    volumes:
+      - lesson_1:/var/lib/postgresql/data
+      - ./DB/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    ports:
+      - "5433:5432"
