@@ -1,4 +1,9 @@
-package org.example;
+package org.example.handler;
+
+import org.example.model.Command;
+import org.example.model.Result;
+import org.example.storage.StorageService;
+import org.example.model.Person;
 
 import java.sql.SQLException;
 import java.util.Map;

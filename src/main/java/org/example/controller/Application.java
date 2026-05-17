@@ -1,4 +1,12 @@
-package org.example;
+package org.example.controller;
+
+import org.example.model.Result;
+import org.example.model.Command;
+import org.example.handler.CommandHandler;
+import org.example.storage.DBServiceImpl;
+import org.example.storage.FileService;
+import org.example.storage.FileServiceImpl;
+import org.example.storage.StorageService;
 
 import java.util.Scanner;
 

@@ -1,4 +1,6 @@
-package org.example;
+package org.example.storage;
+
+import org.example.model.Person;
 
 import java.util.Map;
 

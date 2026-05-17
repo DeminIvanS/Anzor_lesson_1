@@ -1,4 +1,6 @@
-package org.example;
+package org.example.storage;
+
+import org.example.model.Person;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +9,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DBServiceImpl implements StorageService{
+public class DBServiceImpl implements StorageService {
 
 
 
