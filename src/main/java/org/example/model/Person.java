@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model;
 
 import java.util.Objects;
 
@@ -18,7 +18,10 @@ public class Person {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws Exception {
+        if(1==1){
+            throw new Exception();
+        }
         this.name = name;
     }
 

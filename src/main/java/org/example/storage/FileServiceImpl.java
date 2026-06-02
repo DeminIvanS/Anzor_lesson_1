@@ -1,7 +1,8 @@
-package org.example;
+package org.example.storage;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.model.Person;
 
 import java.io.File;
 import java.io.IOException;

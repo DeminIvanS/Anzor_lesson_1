@@ -1,13 +1,15 @@
-package org.example;
+package org.example.storage;
+
+import org.example.model.Person;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class StorageServiceImpl implements StorageService {
+public class InMemoryServiceImpl implements StorageService {
     private final Map<Integer, Person> storage = new HashMap<>();
     private Integer lastId = -1;
 
-    public StorageServiceImpl(Map<Integer, Person> map) {
+    public InMemoryServiceImpl(Map<Integer, Person> map) {
         load(map);
     }
 

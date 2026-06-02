@@ -1,13 +1,14 @@
-package org.example;
+package org.example.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.model.Command;
+import org.example.model.Person;
 
 public class Parser {
 
     private final Validator validator = new Validator();
     private ObjectMapper objectMapper = new ObjectMapper();
-    //UPDATE 3 {"name":"Петя","age":16}
 
     public Command parse(String string) throws JsonProcessingException {
         String[] text = string.split(" ", 2);
@@ -37,7 +38,7 @@ public class Parser {
         if (words.length == 1 && "GET".equals(words[0].toUpperCase())) {
             return parseGetAll();
         } else {
-            validator.validate(input);
+            //validator.validate(input);
             Integer id = Integer.parseInt(words[1]);
             return new Command(id, CommandType.GET);
         }
@@ -46,14 +47,11 @@ public class Parser {
     private Command parseGetAll() {
         return new Command(CommandType.GET_ALL);
     }
-//UPDATE 3 {"name":"Петя","age":16}
 
     private Command parseCreate(String input) throws JsonProcessingException {
         Person person = null;
         String[] words = input.split(" ", 2);
         person = toPerson(words[1]);
-        //TODO: Json -> objectMapper = Person
-
         return new Command(person, CommandType.CREATE);
     }
 
@@ -69,7 +67,7 @@ public class Parser {
     }
 
     private Command parseDelete(String input) {
-        validator.validate(input);
+        //validator.validate(input);
         String[] words = input.split(" ", 2);
         Integer id = null;
         if (isInt(words[1])) {

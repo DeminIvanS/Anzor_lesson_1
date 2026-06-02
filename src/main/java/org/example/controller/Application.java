@@ -1,4 +1,12 @@
-package org.example;
+package org.example.controller;
+
+import org.example.model.Result;
+import org.example.model.Command;
+import org.example.handler.CommandHandler;
+import org.example.storage.DBServiceImpl;
+import org.example.storage.FileService;
+import org.example.storage.FileServiceImpl;
+import org.example.storage.StorageService;
 
 import java.util.Scanner;
 
@@ -6,7 +14,7 @@ public class Application {
     FileService textService = new FileServiceImpl();
     Scanner scanner = new Scanner(System.in);
 
-    StorageService service = new StorageServiceImpl(textService.read());
+    StorageService service = new DBServiceImpl();
     CommandHandler handler = new CommandHandler(service);
 
     Parser parser = new Parser();
